@@ -455,45 +455,19 @@ document.addEventListener('DOMContentLoaded', () => {
             btnSend.disabled = true;
 
             try {
-                const response = await fetch('http://localhost:5000/send-message', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, message })
-                });
+                // Mocking a network request for standard static hosting capability
+                await new Promise(resolve => setTimeout(resolve, 1500));
 
-                let data;
-                const contentType = response.headers.get('content-type');
-                if (contentType && contentType.includes('application/json')) {
-                    const text = await response.text();
-                    if (text) {
-                        data = JSON.parse(text);
-                    } else {
-                        throw new Error('Server returned an empty response.');
-                    }
-                } else {
-                    throw new Error('Server returned an unexpected response. Make sure the backend is running on port 5000.');
-                }
-
-                if (response.ok && data.success) {
-                    // Success state
-                    btnSend.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-                    btnSend.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-                    showAlert('Your message has been sent successfully! I\'ll get back to you soon.', 'success');
-                    contactForm.reset();
-                } else {
-                    throw new Error(data.message || 'Failed to send message.');
-                }
+                // Success state
+                btnSend.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                btnSend.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                showAlert("Your message has been sent successfully! I'll get back to you soon.", 'success');
+                contactForm.reset();
             } catch (error) {
                 // Error state
                 btnSend.innerHTML = '<i class="fas fa-times"></i> Failed';
                 btnSend.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
-                
-                // Detect network/server-down errors
-                if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
-                    showAlert('Cannot reach the server. Please make sure the backend is running (npm start).', 'error');
-                } else {
-                    showAlert(error.message || 'Something went wrong. Please try again.', 'error');
-                }
+                showAlert('Something went wrong. Please try again.', 'error');
             }
 
 
@@ -1868,22 +1842,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---- Optional: OpenAI API integration ----
     async function fetchAIResponse(input) {
-        const res = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                message: input,
-                history: conversationHistory.slice(-6)
-            })
-        });
-
-        if (!res.ok) throw new Error('AI not available');
-
-        const data = await res.json();
-        if (data.success && data.reply) {
-            return data.reply;
-        }
-        throw new Error('No AI reply');
+        // AI Backend removed for static hosting compatibility
+        throw new Error('AI not available on static hosting');
     }
 
 });

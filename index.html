@@ -7,6 +7,8 @@
     <meta name="keywords" content="Prarthi Kumari, Full Stack Developer, Java, Web Development, Portfolio">
     <meta name="author" content="Prarthi Kumari">
     <title>Prarthi Kumari | Full Stack Developer</title>
+    <!-- Favicon (Inline SVG to prevent 404s on static hosting) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -797,7 +799,7 @@
     <script>
     (function() {
         // Record page visit
-        fetch('/api/analytics/visit', { method: 'POST' }).catch(() => {});
+        // fetch('/api/analytics/visit', { method: 'POST' }).catch(() => {});
 
         // Track section views via Intersection Observer
         const sectionNames = {
@@ -818,11 +820,13 @@
                     const id = entry.target.getAttribute('id');
                     if (id && !trackedSections.has(id)) {
                         trackedSections.add(id);
+                        /*
                         fetch('/api/analytics/section', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ section: id })
                         }).catch(() => {});
+                        */
                     }
                 }
             });
