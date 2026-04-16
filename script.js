@@ -135,26 +135,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
 
-    navToggle.addEventListener('click', () => {
-        navToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    // Close menu when clicking a link
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
         });
-    });
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
-    });
+        // Close menu when clicking a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    }
 
 
     // ---- Scroll Animations (Intersection Observer) ----
@@ -167,8 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0,
+        rootMargin: '100px 0px 100px 0px'
     });
 
     animateElements.forEach(el => observer.observe(el));
@@ -209,292 +211,300 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.3 });
 
-    counterObserver.observe(aboutSection);
+    if (aboutSection) {
+        counterObserver.observe(aboutSection);
+    }
 
 
     // ---- Enhanced Particles Background with Glow ----
     const canvas = document.getElementById('particles-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let mouse = { x: null, y: null };
-    let animFrameId;
-    let time = 0;
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null };
+        let animFrameId;
+        let time = 0;
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-    });
-
-    window.addEventListener('mouseout', () => {
-        mouse.x = null;
-        mouse.y = null;
-    });
-
-    // Dynamic color palette
-    const colorPalette = [
-        { r: 139, g: 92,  b: 246 },  // Vivid Violet
-        { r: 59,  g: 130, b: 246 },  // Electric Blue
-        { r: 6,   g: 214, b: 160 },  // Neon Mint
-        { r: 56,  g: 189, b: 248 },  // Sky Blue
-        { r: 244, g: 114, b: 182 },  // Hot Pink
-        { r: 167, g: 139, b: 250 },  // Light Violet
-    ];
-
-    class Particle {
-        constructor() {
-            this.reset();
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
 
-        reset() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2.5 + 0.5;
-            this.baseSize = this.size;
-            this.speedX = (Math.random() - 0.5) * 0.35;
-            this.speedY = (Math.random() - 0.5) * 0.35;
-            this.opacity = Math.random() * 0.5 + 0.1;
-            this.baseOpacity = this.opacity;
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
-            // Color from palette
-            const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-            this.r = color.r;
-            this.g = color.g;
-            this.b = color.b;
-
-            // Pulsing parameters
-            this.pulseSpeed = Math.random() * 0.02 + 0.005;
-            this.pulsePhase = Math.random() * Math.PI * 2;
-
-            // Glow intensity
-            this.glowSize = Math.random() * 8 + 3;
-        }
-
-        update(time) {
-            this.x += this.speedX;
-            this.y += this.speedY;
-
-            // Gentle pulsing
-            const pulse = Math.sin(time * this.pulseSpeed + this.pulsePhase);
-            this.size = this.baseSize + pulse * 0.5;
-            this.opacity = this.baseOpacity + pulse * 0.1;
-
-            // Mouse interaction â€” attract gently when close
-            if (mouse.x !== null) {
-                const dx = mouse.x - this.x;
-                const dy = mouse.y - this.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 150) {
-                    const force = (150 - dist) / 150;
-                    this.x -= dx * 0.008 * force;
-                    this.y -= dy * 0.008 * force;
-                    // Brighten near mouse
-                    this.opacity = Math.min(this.baseOpacity + force * 0.4, 0.9);
-                    this.size = this.baseSize + force * 2;
-                }
-            }
-
-            // Wrap around edges smoothly
-            if (this.x < -10) this.x = canvas.width + 10;
-            if (this.x > canvas.width + 10) this.x = -10;
-            if (this.y < -10) this.y = canvas.height + 10;
-            if (this.y > canvas.height + 10) this.y = -10;
-        }
-
-        draw() {
-            // Draw glow
-            const gradient = ctx.createRadialGradient(
-                this.x, this.y, 0,
-                this.x, this.y, this.glowSize
-            );
-            gradient.addColorStop(0, `rgba(${this.r}, ${this.g}, ${this.b}, ${this.opacity * 0.3})`);
-            gradient.addColorStop(1, `rgba(${this.r}, ${this.g}, ${this.b}, 0)`);
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.glowSize, 0, Math.PI * 2);
-            ctx.fillStyle = gradient;
-            ctx.fill();
-
-            // Draw core dot
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${this.opacity})`;
-            ctx.fill();
-        }
-    }
-
-    function initParticles() {
-        particles = [];
-        // Limit particles for performance
-        const density = window.innerWidth < 768 ? 18000 : 10000;
-        const maxParticles = window.innerWidth < 768 ? 60 : 100;
-        const count = Math.min(Math.floor((canvas.width * canvas.height) / density), maxParticles);
-        for (let i = 0; i < count; i++) {
-            particles.push(new Particle());
-        }
-    }
-
-    function connectParticles() {
-        const maxDist = 130;
-        for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-                const dx = particles[i].x - particles[j].x;
-                const dy = particles[i].y - particles[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < maxDist) {
-                    const opacity = (1 - dist / maxDist) * 0.08;
-                    // Blend colors between connected particles
-                    const r = (particles[i].r + particles[j].r) / 2;
-                    const g = (particles[i].g + particles[j].g) / 2;
-                    const b = (particles[i].b + particles[j].b) / 2;
-
-                    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(particles[i].x, particles[i].y);
-                    ctx.lineTo(particles[j].x, particles[j].y);
-                    ctx.stroke();
-                }
-            }
-        }
-    }
-
-    function animateParticles() {
-        time++;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.update(time);
-            p.draw();
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
         });
-        connectParticles();
-        animFrameId = requestAnimationFrame(animateParticles);
+
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Dynamic color palette
+        const colorPalette = [
+            { r: 139, g: 92,  b: 246 },  // Vivid Violet
+            { r: 59,  g: 130, b: 246 },  // Electric Blue
+            { r: 6,   g: 214, b: 160 },  // Neon Mint
+            { r: 56,  g: 189, b: 248 },  // Sky Blue
+            { r: 244, g: 114, b: 182 },  // Hot Pink
+            { r: 167, g: 139, b: 250 },  // Light Violet
+        ];
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.baseSize = this.size;
+                this.speedX = (Math.random() - 0.5) * 0.35;
+                this.speedY = (Math.random() - 0.5) * 0.35;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.baseOpacity = this.opacity;
+
+                // Color from palette
+                const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+                this.r = color.r;
+                this.g = color.g;
+                this.b = color.b;
+
+                // Pulsing parameters
+                this.pulseSpeed = Math.random() * 0.02 + 0.005;
+                this.pulsePhase = Math.random() * Math.PI * 2;
+
+                // Glow intensity
+                this.glowSize = Math.random() * 8 + 3;
+            }
+
+            update(time) {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Gentle pulsing
+                const pulse = Math.sin(time * this.pulseSpeed + this.pulsePhase);
+                this.size = this.baseSize + pulse * 0.5;
+                this.opacity = this.baseOpacity + pulse * 0.1;
+
+                // Mouse interaction â€” attract gently when close
+                if (mouse.x !== null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        const force = (150 - dist) / 150;
+                        this.x -= dx * 0.008 * force;
+                        this.y -= dy * 0.008 * force;
+                        // Brighten near mouse
+                        this.opacity = Math.min(this.baseOpacity + force * 0.4, 0.9);
+                        this.size = this.baseSize + force * 2;
+                    }
+                }
+
+                // Wrap around edges smoothly
+                if (this.x < -10) this.x = canvas.width + 10;
+                if (this.x > canvas.width + 10) this.x = -10;
+                if (this.y < -10) this.y = canvas.height + 10;
+                if (this.y > canvas.height + 10) this.y = -10;
+            }
+
+            draw() {
+                // Draw glow
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.glowSize
+                );
+                gradient.addColorStop(0, `rgba(${this.r}, ${this.g}, ${this.b}, ${this.opacity * 0.3})`);
+                gradient.addColorStop(1, `rgba(${this.r}, ${this.g}, ${this.b}, 0)`);
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.glowSize, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+
+                // Draw core dot
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${this.r}, ${this.g}, ${this.b}, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            // Limit particles for performance
+            const density = window.innerWidth < 768 ? 18000 : 10000;
+            const maxParticles = window.innerWidth < 768 ? 60 : 100;
+            const count = Math.min(Math.floor((canvas.width * canvas.height) / density), maxParticles);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            const maxDist = 130;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < maxDist) {
+                        const opacity = (1 - dist / maxDist) * 0.08;
+                        // Blend colors between connected particles
+                        const r = (particles[i].r + particles[j].r) / 2;
+                        const g = (particles[i].g + particles[j].g) / 2;
+                        const b = (particles[i].b + particles[j].b) / 2;
+
+                        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            time++;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update(time);
+                p.draw();
+            });
+            connectParticles();
+            animFrameId = requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        // Debounce resize for performance
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                resizeCanvas();
+                initParticles();
+            }, 250);
+        });
     }
-
-    initParticles();
-    animateParticles();
-
-    // Debounce resize for performance
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            resizeCanvas();
-            initParticles();
-        }, 250);
-    });
 
 
     // ---- Mouse-follow glow on hero section ----
     const heroSection = document.querySelector('.hero');
     let heroGlow = null;
 
-    function createHeroGlow() {
-        heroGlow = document.createElement('div');
-        heroGlow.style.cssText = `
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-            transition: transform 0.3s ease-out;
-            filter: blur(20px);
-        `;
-        heroSection.style.position = 'relative';
-        heroSection.appendChild(heroGlow);
-    }
-
-    createHeroGlow();
-
-    heroSection.addEventListener('mousemove', (e) => {
-        if (heroGlow) {
-            const rect = heroSection.getBoundingClientRect();
-            const x = e.clientX - rect.left - 200;
-            const y = e.clientY - rect.top - 200;
-            heroGlow.style.transform = `translate(${x}px, ${y}px)`;
+    if (heroSection) {
+        function createHeroGlow() {
+            heroGlow = document.createElement('div');
+            heroGlow.style.cssText = `
+                position: absolute;
+                width: 400px;
+                height: 400px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
+                pointer-events: none;
+                z-index: 0;
+                transition: transform 0.3s ease-out;
+                filter: blur(20px);
+            `;
+            heroSection.style.position = 'relative';
+            heroSection.appendChild(heroGlow);
         }
-    });
+
+        createHeroGlow();
+
+        heroSection.addEventListener('mousemove', (e) => {
+            if (heroGlow) {
+                const rect = heroSection.getBoundingClientRect();
+                const x = e.clientX - rect.left - 200;
+                const y = e.clientY - rect.top - 200;
+                heroGlow.style.transform = `translate(${x}px, ${y}px)`;
+            }
+        });
+    }
 
 
     // ---- Contact Form (Backend Email) ----
     const contactForm = document.getElementById('contact-form');
     const btnSend = document.getElementById('btn-send');
 
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    if (contactForm && btnSend) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        const name = document.getElementById('form-name').value.trim();
-        const email = document.getElementById('form-email').value.trim();
-        const message = document.getElementById('form-message').value.trim();
+            const name = document.getElementById('form-name').value.trim();
+            const email = document.getElementById('form-email').value.trim();
+            const message = document.getElementById('form-message').value.trim();
 
-        if (!name || !email || !message) {
-            showAlert('Please fill in all fields.', 'error');
-            return;
-        }
+            if (!name || !email || !message) {
+                showAlert('Please fill in all fields.', 'error');
+                return;
+            }
 
-        // Loading state
-        const originalHTML = btnSend.innerHTML;
-        btnSend.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        btnSend.disabled = true;
+            // Loading state
+            const originalHTML = btnSend.innerHTML;
+            btnSend.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btnSend.disabled = true;
 
-        try {
-            const response = await fetch('http://localhost:5000/send-message', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, message })
-            });
+            try {
+                const response = await fetch('http://localhost:5000/send-message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, message })
+                });
 
-            // Safely parse JSON â€” avoid crash on empty or non-JSON response
-            let data;
-            const contentType = response.headers.get('content-type');
-            if (contentType && contentType.includes('application/json')) {
-                const text = await response.text();
-                if (text) {
-                    data = JSON.parse(text);
+                let data;
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const text = await response.text();
+                    if (text) {
+                        data = JSON.parse(text);
+                    } else {
+                        throw new Error('Server returned an empty response.');
+                    }
                 } else {
-                    throw new Error('Server returned an empty response.');
+                    throw new Error('Server returned an unexpected response. Make sure the backend is running on port 5000.');
                 }
-            } else {
-                throw new Error('Server returned an unexpected response. Make sure the backend is running on port 5000.');
+
+                if (response.ok && data.success) {
+                    // Success state
+                    btnSend.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                    btnSend.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    showAlert('Your message has been sent successfully! I\'ll get back to you soon.', 'success');
+                    contactForm.reset();
+                } else {
+                    throw new Error(data.message || 'Failed to send message.');
+                }
+            } catch (error) {
+                // Error state
+                btnSend.innerHTML = '<i class="fas fa-times"></i> Failed';
+                btnSend.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                
+                // Detect network/server-down errors
+                if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
+                    showAlert('Cannot reach the server. Please make sure the backend is running (npm start).', 'error');
+                } else {
+                    showAlert(error.message || 'Something went wrong. Please try again.', 'error');
+                }
             }
 
-            if (response.ok && data.success) {
-                // Success state
-                btnSend.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-                btnSend.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-                showAlert('Your message has been sent successfully! I\'ll get back to you soon.', 'success');
-                contactForm.reset();
-            } else {
-                throw new Error(data.message || 'Failed to send message.');
-            }
-        } catch (error) {
-            // Error state
-            btnSend.innerHTML = '<i class="fas fa-times"></i> Failed';
-            btnSend.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
 
-            // Detect network/server-down errors
-            if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
-                showAlert('Cannot reach the server. Please make sure the backend is running (npm start).', 'error');
-            } else {
-                showAlert(error.message || 'Something went wrong. Please try again.', 'error');
-            }
-        }
-
-        // Reset button after 3 seconds
-        setTimeout(() => {
-            btnSend.innerHTML = originalHTML;
-            btnSend.style.background = '';
-            btnSend.disabled = false;
-        }, 3000);
-    });
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                btnSend.innerHTML = originalHTML;
+                btnSend.style.background = '';
+                btnSend.disabled = false;
+            }, 3000);
+        });
+    }
 
     // ---- Toast Alert System ----
     function showAlert(message, type = 'success') {
