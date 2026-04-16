@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prarthi Kumari — Full Stack Developer Portfolio. Building real-world applications with clean and efficient code. Java, Node.js, MongoDB specialist.">
+    <meta name="keywords" content="Prarthi Kumari, Full Stack Developer, Java, Web Development, Portfolio">
+    <meta name="author" content="Prarthi Kumari">
+    <title>Prarthi Kumari | Full Stack Developer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Analytics (GA4) — Replace G-XXXXXXXXXX with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    <!-- Prevent flash of wrong theme -->
+    <script>
+        (function() {
+            const saved = localStorage.getItem('pk-theme');
+            if (saved === 'light') document.documentElement.classList.add('light-theme');
+        })();
+    </script>
+</head>
+<body>
+
+    <!-- ===================== ANIMATED GRADIENT BACKGROUND ===================== -->
+    <div class="animated-bg"></div>
+    <div class="animated-bg-overlay"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" class="scroll-progress"></div>
+
+    <!-- Particle Background -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Floating Orb Decorations -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-bracket">&lt;</span>PK<span class="logo-bracket">/&gt;</span>
+            </a>
+            <ul id="nav-menu" class="nav-menu">
+                <li><a href="#hero" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#tech-stack-3d" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#achievements" class="nav-link">Achievements</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 16px;">
+                <!-- Sound control UI disabled gracefully by default -->
+                <button id="sound-toggle" class="sound-toggle" aria-label="Toggle sound" title="Enable Sound" style="background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.2rem; transition: color var(--transition-base); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-volume-mute"></i>
+                </button>
+
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle theme">
+                    <span class="theme-toggle-track">
+                        <i class="fas fa-moon theme-icon-dark"></i>
+                        <i class="fas fa-sun theme-icon-light"></i>
+                        <span class="theme-toggle-thumb"></span>
+                    </span>
+                </button>
+
+                <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section id="hero" class="hero">
+        <div class="hero-container">
+            <div class="hero-image-wrapper animate-on-scroll">
+                <div class="hero-image-glow"></div>
+                <div class="hero-image-ring"></div>
+                <img src="./profile.png" alt="Prarthi Kumari — Full Stack Developer" class="hero-image" id="hero-image">
+            </div>
+            <div class="hero-content animate-on-scroll">
+                <p class="hero-greeting">Hello, I'm</p>
+                <h1 class="hero-name">Prarthi Kumari</h1>
+                <div class="hero-role-wrapper">
+                    <span class="hero-role-icon"><i class="fas fa-code"></i></span>
+                    <h2 class="hero-role" id="typewriter"></h2>
+                    <span class="typewriter-cursor">|</span>
+                </div>
+                <p class="hero-tagline">"Building real-world applications with clean and efficient code"</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary" id="btn-projects">
+                        <i class="fas fa-rocket"></i> View Projects
+                    </a>
+                    <a href="#contact" class="btn btn-secondary" id="btn-contact">
+                        <i class="fas fa-envelope"></i> Contact Me
+                    </a>
+                    <button class="btn btn-secondary" id="btn-resume-preview" onclick="document.getElementById('resume-modal').classList.add('active')">
+                        <i class="fas fa-file-alt"></i> Preview Resume
+                    </button>
+                </div>
+                <div class="hero-socials">
+                    <a href="https://github.com/prarthi1909" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub" id="social-github">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/prarthikumari348471256" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn" id="social-linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://leetcode.com/u/prarthi1909" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LeetCode" id="social-leetcode">
+                        <i class="fas fa-code"></i>
+                    </a>
+                    <a href="https://www.codechef.com/users/prarthi_1909" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="CodeChef" id="social-codechef">
+                        <i class="fas fa-utensils"></i>
+                    </a>
+                    <a href="https://www.instagram.com/prarthi1909?igsh=Mnd3bXdhczE3bHht" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram" id="social-instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a href="#about" class="scroll-indicator" aria-label="Scroll down">
+            <div class="mouse">
+                <div class="mouse-wheel"></div>
+            </div>
+            <span>Scroll Down</span>
+        </a>
+    </section>
+
+    <!-- ===================== ABOUT SECTION ===================== -->
+    <section id="about" class="section about">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">
+                <span class="title-number">01.</span> About Me
+            </h2>
+            <div class="about-content animate-on-scroll">
+                <div class="about-card glass-card">
+                    <div class="about-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <p class="about-text">
+                        A motivated <strong>Computer Science undergraduate</strong> with strong skills in 
+                        <strong>Java</strong>, <strong>Web Development</strong>, and <strong>Database Management</strong>. 
+                        I am passionate about building real-world applications that solve meaningful problems 
+                        with clean, efficient, and maintainable code.
+                    </p>
+                    <p class="about-text">
+                        Currently pursuing my B.Tech, I actively seek opportunities to grow my skill set through 
+                        internships, certifications, and hands-on project experience. My focus areas include 
+                        <strong>full-stack web development</strong>, <strong>data structures & algorithms</strong>, 
+                        and <strong>software engineering best practices</strong>.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="5">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="3">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Internships</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="4">0</span>
+                            <span class="stat-label">Star HackerRank</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="3">0</span><span class="stat-plus">+</span>
+                            <span class="stat-label">Certifications</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== EDUCATION SECTION ===================== -->
+    <section id="education" class="section education">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">
+                <span class="title-number">02.</span> Education
+            </h2>
+            <div class="timeline">
+                <div class="timeline-item animate-on-scroll" id="edu-btech">
+                    <div class="timeline-dot">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="timeline-content glass-card">
+                        <span class="timeline-date">2022 — 2026</span>
+                        <h3>B.Tech in Computer Science</h3>
+                        <p class="timeline-institution">
+                            <i class="fas fa-university"></i> LNCT Group of Colleges, Bhopal
+                        </p>
+                        <p class="timeline-detail">Specializing in Computer Science & Engineering</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate-on-scroll" id="edu-12th">
+                    <div class="timeline-dot">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <div class="timeline-content glass-card">
+                        <span class="timeline-date">2020 — 2022</span>
+                        <h3>Senior Secondary (12th)</h3>
+                        <p class="timeline-institution">
+                            <i class="fas fa-building"></i> K.M.R.J Inter College
+                        </p>
+                        <p class="timeline-detail">Science Stream — PCM</p>
+                    </div>
+                </div>
+                <div class="timeline-item animate-on-scroll" id="edu-10th">
+                    <div class="timeline-dot">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="timeline-content glass-card">
+                        <span class="timeline-date">2019 — 2020</span>
+                        <h3>Secondary School (10th)</h3>
+                        <p class="timeline-institution">
+                            <i class="fas fa-building"></i> Acme Public School
+                        </p>
+                        <p class="timeline-detail">Foundation in Mathematics & Science</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== 3D TECH STACK VISUALIZATION ===================== -->
+    <section id="tech-stack-3d" class="section tech-stack-3d">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">
+                <span class="title-number">03.</span> Skills & Technologies
+            </h2>
+            <p class="tech-stack-subtitle animate-on-scroll">Click on any skill to learn more · Hover to interact</p>
+            <div class="tech-stack-canvas-wrapper animate-on-scroll">
+                <canvas id="tech-stack-canvas"></canvas>
+                <!-- Skill detail panel (shown on click) -->
+                <div id="tech-stack-detail" class="tech-stack-detail">
+                    <button class="tech-detail-close" id="tech-detail-close" aria-label="Close detail">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="tech-detail-icon" id="tech-detail-icon"></div>
+                    <h3 class="tech-detail-name" id="tech-detail-name"></h3>
+                    <span class="tech-detail-category" id="tech-detail-category"></span>
+                    <p class="tech-detail-desc" id="tech-detail-desc"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== STATIC SKILLS SECTION (Hidden but kept for data source) ===================== -->
+    <section id="skills" class="section skills" style="display: none;">
+        <div class="container">
+            <!-- Prepared space for future implementation as requested -->
+            <div id="tech-stack-visual"></div>
+            
+            <div class="skills-grid">
+                <!-- Languages -->
+                <div class="skill-category animate-on-scroll glass-card" id="skills-languages">
+                    <h3 class="skill-category-title">
+                        <i class="fas fa-laptop-code"></i> Languages
+                    </h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <i class="fab fa-java"></i>
+                            <span>Java</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-code"></i>
+                            <span>C++</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-js-square"></i>
+                            <span>JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Frontend -->
+                <div class="skill-category animate-on-scroll glass-card" id="skills-frontend">
+                    <h3 class="skill-category-title">
+                        <i class="fas fa-palette"></i> Frontend
+                    </h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <i class="fab fa-html5"></i>
+                            <span>HTML5</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-css3-alt"></i>
+                            <span>CSS3</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-bootstrap"></i>
+                            <span>Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Backend -->
+                <div class="skill-category animate-on-scroll glass-card" id="skills-backend">
+                    <h3 class="skill-category-title">
+                        <i class="fas fa-server"></i> Backend
+                    </h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <i class="fab fa-node-js"></i>
+                            <span>Node.js</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-cogs"></i>
+                            <span>Express.js</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Database -->
+                <div class="skill-category animate-on-scroll glass-card" id="skills-database">
+                    <h3 class="skill-category-title">
+                        <i class="fas fa-database"></i> Database
+                    </h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <i class="fas fa-leaf"></i>
+                            <span>MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- CS Fundamentals -->
+                <div class="skill-category animate-on-scroll glass-card" id="skills-fundamentals">
+                    <h3 class="skill-category-title">
+                        <i class="fas fa-brain"></i> CS Fundamentals
+                    </h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <i class="fas fa-project-diagram"></i>
+                            <span>DSA</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-cubes"></i>
+                            <span>OOPs</span>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-table"></i>
+                            <span>DBMS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== PROJECTS SECTION ===================== -->
+    <section id="projects" class="section projects">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">
+                <span class="title-number">04.</span> Projects
+            </h2>
+
+            <!-- Featured Project -->
+            <div class="featured-project animate-on-scroll glass-card" id="project-featured">
+                <div class="featured-badge">
+                    <i class="fas fa-star"></i> Featured Project
+                </div>
+                <div class="featured-content">
+                    <h3 class="featured-title">Urban Waste Management System</h3>
+                    <p class="featured-description">
+                        A web-based platform for managing urban waste, allowing users to report issues 
+                        and track garbage collection. Features an intuitive interface for citizens and 
+                        administrators to coordinate waste management efficiently.
+                    </p>
+                    <div class="featured-tech">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Express.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                    </div>
+                    <div class="featured-links">
+                        <a href="https://github.com/prarthi1909/urban-waste-mamangment-system" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                            <i class="fab fa-github"></i> View Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Projects Grid -->
+            <div class="projects-grid">
+                <div class="project-card animate-on-scroll glass-card" id="project-student-id">
+                    <div class="project-card-header">
+                        <i class="fas fa-folder-open project-icon"></i>
+                        <a href="https://github.com/prarthi1909/student-identification" target="_blank" rel="noopener noreferrer" class="project-github" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    <h3 class="project-title">Student Identification System</h3>
+                    <p class="project-description">
+                        A system to manage student data with unique ID generation and record handling. 
+                        Built with a clean interface for efficient student information management.
+                    </p>
+                    <div class="project-tech">
+                        <span>Node.js</span>
+                        <span>MongoDB</span>
+                        <span>HTML</span>
+                        <span>CSS</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://github.com/prarthi1909/student-identification" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                            <i class="fab fa-github"></i> View Project
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card animate-on-scroll glass-card" id="project-zoo">
+                    <div class="project-card-header">
+                        <i class="fas fa-folder-open project-icon"></i>
+                        <a href="https://github.com/prarthi1909/zoo-managment-1" target="_blank" rel="noopener noreferrer" class="project-github" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    <h3 class="project-title">Zoo Management System</h3>
+                    <p class="project-description">
+                        A C++/Java-based system for managing zoo animals, records, and operations. 
+                        Demonstrates object-oriented programming and data management skills.
+                    </p>
+                    <div class="project-tech">
+                        <span>C++</span>
+                        <span>Java</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://github.com/prarthi1909/zoo-managment-1" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                            <i class="fab fa-github"></i> View Project
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card animate-on-scroll glass-card" id="project-instagram">
+                    <div class="project-card-header">
+                        <i class="fas fa-folder-open project-icon"></i>
+                        <a href="https://github.com/prarthi1909/instagram-sample" target="_blank" rel="noopener noreferrer" class="project-github" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    <h3 class="project-title">Instagram Clone (Sample UI)</h3>
+                    <p class="project-description">
+                        A frontend clone of Instagram UI showcasing design and layout skills. 
+                        Replicates the visual experience of the popular social media platform.
+                    </p>
+                    <div class="project-tech">
+                        <span>HTML</span>
+                        <span>CSS</span>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="project-link">
+                        <a href="https://github.com/prarthi1909/instagram-sample" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                            <i class="fab fa-github"></i> View Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== ACHIEVEMENTS SECTION ===================== -->
+    <section id="achievements" class="section achievements">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">
+                <span class="title-number">05.</span> Achievements
+            </h2>
+            <div class="achievements-grid">
+                <div class="achievement-card animate-on-scroll glass-card" id="achieve-hackerrank">
+                    <div class="achievement-icon">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>4★ HackerRank</h3>
+                    <p>Problem Solving & Java Programming</p>
+                </div>
+                <div class="achievement-card animate-on-scroll glass-card" id="achieve-cocubes">
+                    <div class="achievement-icon single-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Top 1% — CoCubes</h3>
+                    <p>National Assessment 2025</p>
+                </div>
+                <div class="achievement-card animate-on-scroll glass-card" id="achieve-nptel">
+                    <div class="achievement-icon single-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>NPTEL Certified</h3>
+                    <p>Java Programming Certification</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== EXPERIENCE SECTION ===================== -->
+    <section id="experience" class="section experience">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">
+                <span class="title-number">06.</span> Experience
+            </h2>
+            <div class="experience-grid">
+                <div class="experience-card animate-on-scroll glass-card" id="exp-wipro">
+                    <div class="exp-icon-wrapper">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="exp-content">
+                        <h3>Java Full Stack Developer</h3>
+                        <p class="exp-company"><i class="fas fa-building"></i> Wipro</p>
+                        <p class="exp-description">
+                            Worked on enterprise-grade Java applications, developing RESTful APIs 
+                            and building responsive UI components for internal tools.
+                        </p>
+                        <div class="exp-tags">
+                            <span>Java</span>
+                            <span>Spring Boot</span>
+                            <span>REST API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-card animate-on-scroll glass-card" id="exp-eduskill">
+                    <div class="exp-icon-wrapper">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="exp-content">
+                        <h3>Cybersecurity Intern</h3>
+                        <p class="exp-company"><i class="fas fa-building"></i> Eduskill</p>
+                        <p class="exp-description">
+                            Gained practical experience in network security, vulnerability assessment, 
+                            and implementing security best practices in web applications.
+                        </p>
+                        <div class="exp-tags">
+                            <span>Cybersecurity</span>
+                            <span>Networking</span>
+                            <span>Security Audits</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-card animate-on-scroll glass-card" id="exp-infosys">
+                    <div class="exp-icon-wrapper">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="exp-content">
+                        <h3>Springboard Training</h3>
+                        <p class="exp-company"><i class="fas fa-building"></i> Infosys</p>
+                        <p class="exp-description">
+                            Completed intensive training modules in software development, agile methodologies, 
+                            and industry-standard coding practices.
+                        </p>
+                        <div class="exp-tags">
+                            <span>Agile</span>
+                            <span>Software Dev</span>
+                            <span>Best Practices</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== TYPING GAME SECTION ===================== -->
+    <section id="typing-game" class="section typing-game">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">
+                <span class="title-number">07.</span> Code Typing Challenge
+            </h2>
+            <p class="game-subtitle animate-on-scroll">Think you can type code fast? Test your speed and accuracy! ⌨️🔥</p>
+
+            <div class="game-container glass-card animate-on-scroll">
+                <!-- Game Stats Bar -->
+                <div class="game-stats-bar">
+                    <div class="game-stat">
+                        <i class="fas fa-clock"></i>
+                        <span id="game-timer">30</span>s
+                    </div>
+                    <div class="game-stat">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span id="game-wpm">0</span> WPM
+                    </div>
+                    <div class="game-stat">
+                        <i class="fas fa-bullseye"></i>
+                        <span id="game-accuracy">100</span>%
+                    </div>
+                    <div class="game-stat highlight">
+                        <i class="fas fa-trophy"></i>
+                        <span id="game-highscore">0</span> Best
+                    </div>
+                </div>
+
+                <!-- Code Display -->
+                <div class="game-code-display" id="game-code-display">
+                    <span class="code-cursor"></span>
+                    <span class="code-prompt">Press "Start" or click here to begin...</span>
+                </div>
+
+                <!-- Input Area -->
+                <input type="text" id="game-input" class="game-input" placeholder="Start typing here..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
+
+                <!-- Controls -->
+                <div class="game-controls">
+                    <button id="game-start" class="game-btn game-btn-start">
+                        <i class="fas fa-play"></i> Start Game
+                    </button>
+                    <button id="game-restart" class="game-btn game-btn-restart" style="display:none;">
+                        <i class="fas fa-redo"></i> Play Again
+                    </button>
+                    <select id="game-difficulty" class="game-select">
+                        <option value="easy">Easy — Plain Text</option>
+                        <option value="medium" selected>Medium — Code Snippets</option>
+                        <option value="hard">Hard — Complex Code</option>
+                    </select>
+                </div>
+
+                <!-- Results (hidden until game ends) -->
+                <div id="game-results" class="game-results" style="display:none;">
+                    <h3>⏱️ Time's Up!</h3>
+                    <div class="results-grid">
+                        <div class="result-item">
+                            <span class="result-value" id="result-wpm">0</span>
+                            <span class="result-label">Words/Min</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-value" id="result-accuracy">0</span>
+                            <span class="result-label">Accuracy %</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-value" id="result-chars">0</span>
+                            <span class="result-label">Characters</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-value" id="result-rank">—</span>
+                            <span class="result-label">Rank</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== CONTACT SECTION ===================== -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">
+                <span class="title-number">08.</span> Get In Touch
+            </h2>
+            <div class="contact-wrapper animate-on-scroll">
+                <div class="contact-info glass-card">
+                    <h3>Let's Connect</h3>
+                    <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.</p>
+                    <div class="contact-details">
+                        <div class="contact-item" id="contact-email">
+                            <div class="contact-item-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span class="contact-label">Email</span>
+                                <a href="mailto:prarthikumari0101@gmail.com" class="interactive-link">prarthikumari0101@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-item" id="contact-phone">
+                            <div class="contact-item-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <span class="contact-label">Phone</span>
+                                <a href="tel:+918709567425" class="interactive-link">+91 8709567425</a>
+                            </div>
+                        </div>
+                        <div class="contact-item" id="contact-location">
+                            <div class="contact-item-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <span class="contact-label">Location</span>
+                                <span>India</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-socials">
+                        <a href="https://github.com/prarthi1909" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/prarthikumari348471256" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://leetcode.com/u/prarthi1909" target="_blank" rel="noopener noreferrer" aria-label="LeetCode"><i class="fas fa-code"></i></a>
+                        <a href="https://www.codechef.com/users/prarthi_1909" target="_blank" rel="noopener noreferrer" aria-label="CodeChef"><i class="fas fa-utensils"></i></a>
+                        <a href="https://www.instagram.com/prarthi1909?igsh=Mnd3bXdhczE3bHht" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper glass-card">
+                    <h3>Send a Message</h3>
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="form-name" placeholder="Your Name" required>
+                            <label for="form-name">Your Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="form-email" placeholder="Your Email" required>
+                            <label for="form-email">Your Email</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="form-message" placeholder="Your Message" rows="5" required></textarea>
+                            <label for="form-message">Your Message</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full" id="btn-send">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">
+                    Designed & Built by <strong>Prarthi Kumari</strong>
+                </p>
+                <p class="footer-copyright">
+                    &copy; 2026 All Rights Reserved
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ===================== WHATSAPP DIRECT CHAT ===================== -->
+    <a href="https://wa.me/918709567425?text=Hi%20Prarthi%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you." target="_blank" rel="noopener noreferrer" class="whatsapp-float popup-interactive" aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-pulse"></span>
+    </a>
+
+    <!-- ===================== AI CHATBOT ===================== -->
+    <div id="chatbot-toggle" class="chatbot-toggle" aria-label="Open chat assistant">
+        <i class="fas fa-robot"></i>
+        <span class="chatbot-pulse"></span>
+    </div>
+
+    <div id="chatbot-window" class="chatbot-window">
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <div class="chatbot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <h4>PK Assistant</h4>
+                    <span class="chatbot-status"><span class="status-dot"></span> Online</span>
+                </div>
+            </div>
+            <button id="chatbot-close" class="chatbot-close" aria-label="Close chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chatbot-messages" class="chatbot-messages">
+            <!-- Messages will be injected by JS -->
+        </div>
+        <div class="chatbot-suggestions" id="chatbot-suggestions">
+            <button class="suggestion-chip" data-query="Tell me about Prarthi">About Prarthi</button>
+            <button class="suggestion-chip" data-query="Show projects">Projects</button>
+            <button class="suggestion-chip" data-query="Skills?">Skills</button>
+            <button class="suggestion-chip" data-query="Experience">Experience</button>
+            <button class="suggestion-chip" data-query="Contact">Contact</button>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask me anything..." autocomplete="off">
+            <button id="chatbot-send" class="chatbot-send" aria-label="Send message">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <!-- Built-in Analytics Tracking -->
+    <script>
+    (function() {
+        // Record page visit
+        fetch('/api/analytics/visit', { method: 'POST' }).catch(() => {});
+
+        // Track section views via Intersection Observer
+        const sectionNames = {
+            'hero': 'Hero',
+            'about': 'About',
+            'education': 'Education',
+            'skills': 'Skills',
+            'projects': 'Projects',
+            'achievements': 'Achievements',
+            'experience': 'Experience',
+            'contact': 'Contact'
+        };
+        const trackedSections = new Set();
+
+        const analyticsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    if (id && !trackedSections.has(id)) {
+                        trackedSections.add(id);
+                        fetch('/api/analytics/section', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ section: id })
+                        }).catch(() => {});
+                    }
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('section[id], .hero').forEach(el => {
+            analyticsObserver.observe(el);
+        });
+    })();
+    </script>
+
+    <!-- ===================== RESUME PREVIEW MODAL ===================== -->
+    <div id="resume-modal" class="resume-modal">
+        <div class="resume-modal-backdrop" onclick="document.getElementById('resume-modal').classList.remove('active')"></div>
+        <div class="resume-modal-container">
+            <!-- Modal Header -->
+            <div class="resume-modal-header">
+                <div class="resume-modal-title">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Prarthi Kumari — Resume</span>
+                </div>
+                <div class="resume-modal-controls">
+                    <button class="resume-ctrl-btn" id="resume-zoom-out" title="Zoom Out">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <span class="resume-zoom-level" id="resume-zoom-level">100%</span>
+                    <button class="resume-ctrl-btn" id="resume-zoom-in" title="Zoom In">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                    <button class="resume-ctrl-btn" id="resume-zoom-reset" title="Reset Zoom">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <div class="resume-ctrl-divider"></div>
+                    <a href="assets/resume.pdf" download="Prarthi_Kumari_Resume.pdf" class="resume-ctrl-btn resume-download-btn" title="Download PDF">
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                    <button class="resume-ctrl-btn resume-close-btn" id="resume-close" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- PDF Viewer -->
+            <div class="resume-modal-body" id="resume-modal-body">
+                <div class="resume-viewer-wrapper" id="resume-viewer-wrapper">
+                    <iframe src="" id="resume-iframe" class="resume-iframe" title="Resume Preview"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
